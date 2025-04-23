@@ -30,7 +30,7 @@ jobs:
 
       - name: Add saritasa repository dependency
         run: |
-          helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
+          helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/ || true
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
