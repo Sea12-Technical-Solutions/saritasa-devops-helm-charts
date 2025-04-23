@@ -2,6 +2,27 @@ apiVersion: v1
 entries:
   maintenance-page:
   - apiVersion: v2
+    created: "2025-04-23T16:59:14.983125444Z"
+    description: 'A Helm chart for Kubernetes to display a simple maintenance page.
+      By default it displays the following content: [https://codepen.io/Neil-Mayers/pen/XJJNqNv](https://codepen.io/Neil-Mayers/pen/XJJNqNv)  You
+      can adjust the look by setting up the following values in the values.yaml file:   ```yaml
+      message:   backgroundColor: "#d6433b"   textColor: "#fff"   title: "Site Maintenance"   header:
+      "We&rsquo;ll be back soon!"   body: |     <p>Sorry for the inconvenience. We&rsquo;re
+      performing some maintenance at the moment. We&rsquo;ll be back up shortly!</p>   footer:
+      |     <p>&mdash; The DevOps Team</p> ```  or by supplying an entire HTML for
+      the maintenance page via  ```yaml html: |   hello, the maintenance page HTML
+      + CSS code is here ```'
+    digest: 4326e527ae6d4ed5272933f21eba3fe672b1c637a59d27116dc27b2f6d3a35c3
+    maintainers:
+    - email: nospam@sea12tech.com
+      name: Saritasa
+      url: https://www.sea12tech.com/
+    name: maintenance-page
+    type: application
+    urls:
+    - https://github.com/Sea12-Technical-Solutions/saritasa-devops-helm-charts/releases/download/maintenance-page-0.0.5/maintenance-page-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     created: "2025-04-23T16:51:36.924730371Z"
     description: 'A Helm chart for Kubernetes to display a simple maintenance page.
       By default it displays the following content: [https://codepen.io/Neil-Mayers/pen/XJJNqNv](https://codepen.io/Neil-Mayers/pen/XJJNqNv)  You
@@ -22,4 +43,4 @@ entries:
     urls:
     - https://github.com/Sea12-Technical-Solutions/saritasa-devops-helm-charts/releases/download/maintenance-page-0.0.4/maintenance-page-0.0.4.tgz
     version: 0.0.4
-generated: "2025-04-23T16:51:36.924737515Z"
+generated: "2025-04-23T16:59:14.983139851Z"
