@@ -14,12 +14,12 @@ appVersion: "v0.28.2"
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.1.0
+version: 1.1.1
 
 maintainers:
-  - url: https://www.saritasa.com/
+  - url: https://www.sea12tech.com/
     name: Saritasa
-    email: nospam@saritasa.com
+    email: nospam@sea12tech.com
 
 
 description: |
@@ -37,7 +37,7 @@ description: |
   Install the chart:
 
   ```
-  helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+  helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
   ```
 
   then create the manifest and apply:
@@ -148,7 +148,7 @@ description: |
           nodeSelector:
             tekton_builder: "true"
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.4"
     syncPolicy:
       automated:

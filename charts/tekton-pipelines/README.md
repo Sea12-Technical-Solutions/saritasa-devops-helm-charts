@@ -37,7 +37,7 @@ saritasa-tekton-pipelines
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Saritasa |  | <https://www.saritasa.com/> |
+| Saritasa |  | <https://www.sea12tech.com/> |
 
 ## `chart.description`
 
@@ -59,7 +59,7 @@ Implemented pipelines include:
 Install the chart:
 
 ```
-helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
 ```
 
 then if you want to support only frontend and django pipelines based on buildpack without any script modifications:
@@ -93,7 +93,7 @@ spec:
             buildpackDjangoBuildPipeline:
               enabled: true
 
-    repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+    repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
     targetRevision: "0.1.4"
   syncPolicy:
     automated:

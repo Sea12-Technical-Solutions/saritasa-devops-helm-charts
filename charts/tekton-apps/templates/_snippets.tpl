@@ -2,7 +2,7 @@
 Create a default mail list address for the project
 */}}
 {{- define "tekton-apps.mailList" -}}
-{{ $email := ternary .project.mailList (printf "%s@%s" .project.project "saritasa.com")
+{{ $email := ternary .project.mailList (printf "%s@%s" .project.project "sea12tech.com")
              (hasKey .project "mailList") -}}
 {{- $email }}
 {{- end }}
@@ -11,7 +11,7 @@ Create a default mail list address for the project
 Create a default devops mail list address for the project
 */}}
 {{- define "tekton-apps.devopsMailList" -}}
-{{ $email := ternary .project.devopsMailList (printf "devops+%s@%s" .project.project "saritasa.com")
+{{ $email := ternary .project.devopsMailList (printf "devops+%s@%s" .project.project "sea12tech.com")
              (hasKey .project "devopsMailList") -}}
 {{- $email }}
 {{- end }}
