@@ -37,13 +37,13 @@ maintenance-page
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Saritasa | <nospam@saritasa.com> | <https://www.saritasa.com/> |
+| Saritasa | <nospam@sea12tech.com> | <https://www.sea12tech.com/> |
 
 ## `chart.description`
 
 A Helm chart for Kubernetes to display a simple maintenance page.
 By default it displays the following content:
-[https://codepen.io/dmitry-mightydevops/pen/poLaZqO](https://codepen.io/dmitry-mightydevops/pen/poLaZqO)
+[https://codepen.io/Neil-Mayers/pen/XJJNqNv](https://codepen.io/Neil-Mayers/pen/XJJNqNv)
 
 You can adjust the look by setting up the following values in the values.yaml file:
 
@@ -73,7 +73,7 @@ html: |
 | affinity | object | `{}` |  |
 | environment | string | `""` | name of the environment you're placing the maintenance page for like dev, prod, staging |
 | fullnameOverride | string | `""` |  |
-| html | string | `""` | html for the maintenance page. If you need a totally custom HTML design, then keep message config above empty and put here a full HTML (CSS+HTML). You can test the page here: https://codepen.io/dmitry-mightydevops/pen/poLaZqO |
+| html | string | `""` | html for the maintenance page. If you need a totally custom HTML design, then keep message config above empty and put here a full HTML (CSS+HTML). You can test the page here: https://codepen.io/Neil-Mayers/pen/XJJNqNv |
 | image.pullPolicy | string | `"IfNotPresent"` | pull policy |
 | image.repository | string | `"saritasallc/kubernetes-maintenance-page"` | container repository, adjust in https://github.com/saritasa-nest/saritasa-devops-docker-images/pull/29 |
 | image.tag | string | `"0.1"` | Overrides the image tag whose default is the chart appVersion. |

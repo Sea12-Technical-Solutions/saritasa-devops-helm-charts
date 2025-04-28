@@ -37,7 +37,7 @@ terraform-pod
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Saritasa |  | <https://www.saritasa.com/> |
+| Saritasa |  | <https://www.sea12tech.com/> |
 
 ## `chart.description`
 
@@ -48,7 +48,7 @@ A Helm chart for running infra-dev-aws solutions
 Install the chart:
 
 ```
-helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
 ```
 
 ## Use

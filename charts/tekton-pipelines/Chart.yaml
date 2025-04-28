@@ -6,15 +6,15 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.48
+version: 0.1.49
 
 maintainers:
-  - url: https://www.saritasa.com/
+  - url: https://www.sea12tech.com/
     name: Saritasa
 
 dependencies:
   - name: saritasa-tekton
-    repository: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+    repository: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
     version: ~0.1.x
     condition: saritasa-tekton.enabled
 
@@ -37,7 +37,7 @@ description: |
   Install the chart:
 
   ```
-  helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+  helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
   ```
 
   then if you want to support only frontend and django pipelines based on buildpack without any script modifications:
@@ -71,7 +71,7 @@ description: |
               buildpackDjangoBuildPipeline:
                 enabled: true
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.4"
     syncPolicy:
       automated:

@@ -37,7 +37,7 @@ prometheus-xrstf-github-exporter
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Saritasa | <nospam@saritasa.com> | <https://www.saritasa.com/> |
+| Saritasa | <nospam@sea12tech.com> | <https://www.sea12tech.com/> |
 
 ## `chart.description`
 

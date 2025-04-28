@@ -66,15 +66,15 @@ apps: []
   #       pm: xxx
   #       tm: xxx
   #     namespace: test
-  #   mailList: xxx@saritasa.com
-  #   devopsMailList: devops+xxx@saritasa.com
+  #   mailList: xxx@sea12tech.com
+  #   devopsMailList: devops+xxx@sea12tech.com
   #   jiraURL: https://saritasa.atlassian.net/browse/xxx
   #   tektonURL: https://tekton.site.com/#/namespaces/ci/pipelineruns
   #   slack: client-xxx-ci
   #   kubernetesRepository:
   #     name: xxx-kubernetes-aws
   #     branch: main
-  #     url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+  #     url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
   #   extraApps:
   #     - path: dev/argocd/apps
@@ -162,7 +162,7 @@ apps: []
   #         podSecurityContext:
   #           enabled: false
   #           fsGroup: 101
-  #         repositorySshUrl: git@github.com:saritasa-nest/xxx-wordpress.git
+  #         repositorySshUrl: git@github.com:Sea12-Technical-Solutions/xxx-wordpress.git
   #         repositoryRevision: environment
   #         externalDatabase:
   #           host: xxx.rds.amazonaws.com

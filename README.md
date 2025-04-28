@@ -1,7 +1,7 @@
 # Saritasa helm charts
 
 ```sh
-❯ helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+❯ helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
 
 ❯ helm search repo saritasa
 NAME                              	CHART VERSION	APP VERSION	DESCRIPTION
@@ -101,7 +101,7 @@ After successfult build (see [Actions](https://github.com/saritasa-nest/saritasa
 If you want to see the result of the build (packaged HELM chart) you can do:
 
 ```sh
-helm pull --version 0.0.4 --repo https://saritasa-nest.github.io/saritasa-devops-helm-charts/ demo
+helm pull --version 0.0.4 --repo https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/ demo
 ```
 
 ### remove the release

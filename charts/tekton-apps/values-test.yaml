@@ -39,8 +39,8 @@ apps:
           # In staging/prod client cluster use webhook integration:
           notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
       syncWave: 200
-    mailList: nmbl@saritasa.com
-    devopsMailList: devops+nmbl@saritasa.com
+    mailList: nmbl@sea12tech.com
+    devopsMailList: devops+nmbl@sea12tech.com
     jiraURL: https://saritasa.atlassian.net/browse/NMBLCLD
     tektonURL: https://tekton.proxylegalstaging.com/#/namespaces/ci/pipelineruns
     slack: client-nmbl-ci
@@ -151,7 +151,7 @@ apps:
             fsGroup: 101
           ci:
             enabled: false
-            repository_ssh_url: --branch environment git@github.com:saritasa-nest/xxx-wordpress.git
+            repository_ssh_url: --branch environment git@github.com:Sea12-Technical-Solutions/xxx-wordpress.git
             branch: environment
           externalDatabase:
             host: xxx.rds.amazonaws.com

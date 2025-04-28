@@ -6,10 +6,10 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.0.36
+version: 0.0.37
 
 maintainers:
-  - url: https://www.saritasa.com/
+  - url: https://www.sea12tech.com/
     name: Saritasa
 
 # This is the version number of the application being deployed. This version number should be
@@ -26,7 +26,7 @@ description: |
   Install the chart:
 
   ```
-  helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+  helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
   ```
 
   ## Use

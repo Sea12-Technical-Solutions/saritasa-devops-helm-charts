@@ -37,7 +37,7 @@ saritasa-tekton
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Saritasa | <nospam@saritasa.com> | <https://www.saritasa.com/> |
+| Saritasa | <nospam@sea12tech.com> | <https://www.sea12tech.com/> |
 
 ## `chart.description`
 
@@ -55,7 +55,7 @@ Implements:
 Install the chart:
 
 ```
-helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
 ```
 
 then create the manifest and apply:
@@ -165,7 +165,7 @@ spec:
         nodeSelector:
           tekton_builder: "true"
 
-    repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+    repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
     targetRevision: "0.1.4"
   syncPolicy:
     automated:
