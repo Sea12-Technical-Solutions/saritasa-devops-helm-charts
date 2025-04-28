@@ -1,6 +1,6 @@
 dependencies:
 - name: saritasa-tekton
-  repository: ""
-  version: ~0.1.x
-digest: sha256:2f438dd5ba3dc429b59059a08c0433c4fcaefa246bb890048e4d16cd85c62f76
-generated: "2025-04-28T21:10:16.999053+02:00"
+  repository: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
+  version: 1.1.1
+digest: sha256:07562e763b35bc637d279c603590165a084ed6a658f6b9d6f3f1cc70a47fc860
+generated: "2025-04-28T21:25:29.783505+02:00"
