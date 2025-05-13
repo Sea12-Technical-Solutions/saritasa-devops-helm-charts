@@ -26,7 +26,7 @@ message: {}
   # footer: |
   #   <p>&mdash; The DevOps Team</p>
 
-# -- html for the maintenance page. If you need a totally custom HTML design, then keep message config above empty and put here a full HTML (CSS+HTML). You can test the page here: https://codepen.io/dmitry-mightydevops/pen/poLaZqO
+# -- html for the maintenance page. If you need a totally custom HTML design, then keep message config above empty and put here a full HTML (CSS+HTML). You can test the page here: https://codepen.io/Neil-Mayers/pen/XJJNqNv
 html: |
 
 # -- credentials for docker login

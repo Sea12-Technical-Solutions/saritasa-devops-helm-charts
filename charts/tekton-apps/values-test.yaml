@@ -15,7 +15,7 @@ defaultRegistry: 833737135757.dkr.ecr.us-east-2.amazonaws.com
 argocd:
   server: deploy.proxylegalstaging.com
 
-eventlistener:
+trigger:
   enableWebhookSecret: true
 
 apps:
@@ -39,8 +39,8 @@ apps:
           # In staging/prod client cluster use webhook integration:
           notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
       syncWave: 200
-    mailList: nmbl@saritasa.com
-    devopsMailList: devops+nmbl@saritasa.com
+    mailList: nmbl@sea12tech.com
+    devopsMailList: devops+nmbl@sea12tech.com
     jiraURL: https://saritasa.atlassian.net/browse/NMBLCLD
     tektonURL: https://tekton.proxylegalstaging.com/#/namespaces/ci/pipelineruns
     slack: client-nmbl-ci
@@ -54,6 +54,11 @@ apps:
         path: dev/argocd/apps
         repoUrl: git@github.com:saritasa-nest/nmbl-kubernetes-aws.git
         targetRevision: feature/sync-boilerplate
+        kustomizeHelmChart: true
+        argocd:
+          notifications:
+            annotations:
+              notifications.argoproj.io/subscribe.on-deployed.slack: project-nmbl-ci
 
     components:
       - name: backend
@@ -61,8 +66,12 @@ apps:
         pipeline: buildpack-django-build-pipeline
         applicationURL: https://api.proxylegalstaging.com
         argocd:
+          source:
+            kustomizeHelmChart: true
           syncWave: 210
-
+          notifications:
+            annotations:
+              notifications.argoproj.io/subscribe.on-sync-failed.slack: project-nmbl-ci
         eventlistener:
           template: buildpack-django-build-pipeline-trigger-template
         triggerBinding:
@@ -112,6 +121,10 @@ apps:
           # ignoreDeploymentReplicasDiff: true
           source:
             targetRevision: 15.2.4
+            # kustomizeHelmChart: true
+          notifications:
+            annotations:
+              notifications.argoproj.io/subscribe.on-sync-status-unknown.slack: project-nmbl; project-nmbl-alarms
         wordpress:
           imageTag: 6.0.2
           repositorySshUrl: ssh://
@@ -121,6 +134,8 @@ apps:
           extraInitContainers:
             - name: another
               image: fuck2
+
+          priorityClassName: high-priority
 
           resources:
             requests:
@@ -136,7 +151,7 @@ apps:
             fsGroup: 101
           ci:
             enabled: false
-            repository_ssh_url: --branch environment git@github.com:saritasa-nest/xxx-wordpress.git
+            repository_ssh_url: --branch environment git@github.com:Sea12-Technical-Solutions/xxx-wordpress.git
             branch: environment
           externalDatabase:
             host: xxx.rds.amazonaws.com
@@ -156,3 +171,7 @@ apps:
 # make sure PVCs are bound after the chart is synced
 # by temporarily mount them into short-live job.
 runPostInstallMountPvcJob: true
+
+serviceAccount:
+  name: build-bot-sa
+  namespace: tekton-pipelines

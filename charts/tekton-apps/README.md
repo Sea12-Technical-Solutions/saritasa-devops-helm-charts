@@ -31,13 +31,13 @@ saritasa-tekton-apps
 
 ## `chart.version`
 
-![Version: 0.2.17](https://img.shields.io/badge/Version-0.2.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.29.0](https://img.shields.io/badge/AppVersion-v0.29.0-informational?style=flat-square)
+![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.29.0](https://img.shields.io/badge/AppVersion-v0.29.0-informational?style=flat-square)
 
 ## Maintainers
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Saritasa | <nospam@saritasa.com> | <https://www.saritasa.com/> |
+| Saritasa | <nospam@sea12tech.com> | <https://www.sea12tech.com/> |
 
 ## `chart.description`
 
@@ -59,7 +59,7 @@ Implements:
 Install the chart:
 
 ```
-helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
 ```
 
 then declare dynamic list of projects (and associated components of that project like backend, api, frontend, etc) that would be dynamically
@@ -100,8 +100,10 @@ spec:
         defaultRegistry: xxx.dkr.ecr.us-west-2.amazonaws.com
         argocd:
           server: deploy.staging.site.com
-        eventlistener:
+        trigger:
           enableWebhookSecret: true
+          labels:
+            builder: tekton
         apps:
           - project: vp
             enabled: true
@@ -176,7 +178,7 @@ spec:
         # by temporarily mount them into short-live job.
         runPostInstallMountPvcJob: false
 
-    repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+    repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
     targetRevision: "0.1.16"
   syncPolicy:
     automated:
@@ -195,6 +197,7 @@ spec:
   There are two ways of activating notifications, using slack-token integration and using project-webhooks integration.
   The slack-token allows sending to any slack channel where the app is installed, that's why we should only use it in rocks/cloud cluster and not in clients clusters.
   The project-webhook integrations can only send to the channel where it's created in Slack app 'client deployments' (https://api.slack.com/apps/A01LM626QTZ/incoming-webhooks?) and it should be used in staging/prod client clusters.
+  The on-sync-status-unknown subscription is only available for Wordpress applications (it creates redundant notifications for non Wordpress apps)
 
   # fill below parameters for each `project` block
 
@@ -282,6 +285,7 @@ spec:
     updateStrategy.rollingUpdate.maxSurge: 0%, updateStrategy.rollingUpdate.maxUnavailable: 100%, i.e. stop old pod and then create a new one)
   - apps[PROJECT].components[NAME].wordpress.replica_count - wordpress deployment replica count (default: 1)
   - apps[PROJECT].components[NAME].wordpress.nodeSelector - wordpress pod node selector params (default: nodeSelector.tech_stack: php, nodeSelector.pvc: "true")
+  - apps[PROJECT].components[NAME].wordpress.priorityClassName - wordpress pod priorityClassName params (default: null)
   - apps[PROJECT].components[NAME].wordpress.podSecurityContext - wordpress pod's security context params (default: bitnami chart defaults)
   - apps[PROJECT].components[NAME].wordpress.containerSecurityContext - wordpress pod container's security context params (default: bitnami chart defaults)
   - apps[PROJECT].components[NAME].wordpress.initContainers - init containers (default: init container for ci/cd purposes)
@@ -316,7 +320,7 @@ spec:
   - apps[PROJECT].components[NAME].wordpress.wordpressBlogName - wordpress blog name (default: <project-name>)
   - apps[PROJECT].components[NAME].wordpress.wordpressTablePrefix - wordpress DB tables prefix (default: wp_)
   - apps[PROJECT].components[NAME].wordpress.wordpressScheme - wordpress access scheme (default: "https")
-  - apps[PROJECT].components[NAME].wordpress.wordpressEmail - target for sending emails (default: devops+<client-name>@saritasa.com)
+  - apps[PROJECT].components[NAME].wordpress.wordpressEmail - target for sending emails (default: devops+<client-name>@sea12tech.com)
   - apps[PROJECT].components[NAME].wordpress.existingSecret - name of existing in kubernetes secret with wp admin and smtp auth info, should contain sections: 'wordpress-password', 'smtp-password'.
   - apps[PROJECT].components[NAME].wordpress.smtpHost - SMTP host for sending emails (default: mailhog.mailhog.svc.cluster.local)
   - apps[PROJECT].components[NAME].wordpress.smtpPort - SMTP port for sending emails (default: 1025)
@@ -355,7 +359,7 @@ spec:
           defaultRegistry: xxx.dkr.ecr.us-west-2.amazonaws.com
           argocd:
             server: deploy.staging.site.com
-          eventlistener:
+          trigger:
             enableWebhookSecret: true
           apps:
             - project: xxx
@@ -377,15 +381,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.site.com/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -430,7 +434,7 @@ spec:
           # by temporarily mount them into short-live job.
           runPostInstallMountPvcJob: false
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -487,10 +491,10 @@ spec:
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
                 sourceRepos:
-                  - git@github.com:saritasa-nest/xxx-backend.git
-                  - git@github.com:saritasa-nest/xxx-frontend.git
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+                  - git@github.com:Sea12-Technical-Solutions/xxx-backend.git
+                  - git@github.com:Sea12-Technical-Solutions/xxx-frontend.git
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
@@ -503,7 +507,7 @@ spec:
                   argocd:
                     source:
                       path: .kubernetes/manifests/dev
-                      repoUrl: git@github.com:saritasa-nest/xxx-backend.git
+                      repoUrl: git@github.com:Sea12-Technical-Solutions/xxx-backend.git
                       targetRevision: develop
                   eventlistener:
                     template: buildpack-django-build-pipeline-trigger-template
@@ -522,7 +526,7 @@ spec:
                   argocd:
                     source:
                       path: .kubernetes/manifests/dev
-                      repoUrl: git@github.com:saritasa-nest/xxx-frontend.git
+                      repoUrl: git@github.com:Sea12-Technical-Solutions/xxx-frontend.git
                       targetRevision: develop
                   eventlistener:
                     template: buildpack-frontend-build-pipeline-trigger-template
@@ -537,7 +541,7 @@ spec:
                     - name: source_subpath
                       value: dist/web
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -594,15 +598,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -621,7 +625,7 @@ spec:
                     - name: buildpack_runner_image
                       value: public.ecr.aws/saritasa/buildpacks/google/runner:v1
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -680,15 +684,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -707,7 +711,7 @@ spec:
                     - name: buildpack_runner_image
                       value: public.ecr.aws/saritasa/buildpacks/google/runner:v1
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -762,15 +766,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -804,7 +808,7 @@ spec:
                     - name: buildpack_runner_image
                       value: public.ecr.aws/saritasa/buildpacks/google/runner:v1
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -860,15 +864,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -919,7 +923,7 @@ spec:
                     - name: buildpack_runner_image
                       value: public.ecr.aws/saritasa/buildpacks/google/runner:v1
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -976,15 +980,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -1005,7 +1009,7 @@ spec:
                     - name: buildpack_runner_image
                       value: public.ecr.aws/saritasa/buildpacks/google/runner:v1
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -1060,15 +1064,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -1089,7 +1093,7 @@ spec:
                     - name: sentry_project_name
                       value: custom-xxx-dev-backend
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -1144,15 +1148,15 @@ spec:
                     notifications.argoproj.io/subscribe.on-deployed.slack: project-xxx-ci
                     # In staging/prod client cluster use webhook integration:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: backend
@@ -1175,7 +1179,7 @@ spec:
                     - name: project_config_filename
                       value: ovio-api-project.toml
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -1269,8 +1273,8 @@ spec:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
                 sourceRepos:
                   - https://charts.bitnami.com/bitnami
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
@@ -1285,18 +1289,19 @@ spec:
                     source:
                       targetRevision: 15.0.16
                   wordpress:
-                    repository_ssh_url: git@github.com:saritasa-nest/xxx-wordpress.git
+                    repository_ssh_url: git@github.com:Sea12-Technical-Solutions/xxx-wordpress.git
                     externalDatabase:
                       host: xxx.xxx.us-west-2.rds.amazonaws.com
                       user: xxx-wordpress-user-dev
                       existingSecret: xxx-wordpress-dev-externaldb
                       database: xxx-wordpress-dev
+                    priorityClassName: high-priority
                     persistence:
                       storageClass: gp3
                   eventlistener:
                     template: wordpress-build-pipeline-trigger-template
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -1352,8 +1357,8 @@ spec:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
                 sourceRepos:
                   - https://charts.bitnami.com/bitnami
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
@@ -1375,7 +1380,7 @@ spec:
                   eventlistener:
                     template: wordpress-build-pipeline-trigger-template
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -1435,16 +1440,16 @@ spec:
                     notifications.argoproj.io/subscribe.on-health-degraded.project-webhook: enabled
                 sourceRepos:
                   - https://charts.bitnami.com/bitnami
-                  - git@github.com:saritasa-nest/xxx-kubernetes-aws.git
-              mailList: xxx@saritasa.com
-              devopsMailList: devops+xxx@saritasa.com
+                  - git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
+              mailList: xxx@sea12tech.com
+              devopsMailList: devops+xxx@sea12tech.com
               jiraURL: https://saritasa.atlassian.net/browse/xxx
               tektonURL: https://tekton.saritasa.rocks/#/namespaces/ci/pipelineruns
               slack: client-xxx-ci
               kubernetesRepository:
                 name: xxx-kubernetes-aws
                 branch: main
-                url: git@github.com:saritasa-nest/xxx-kubernetes-aws.git
+                url: git@github.com:Sea12-Technical-Solutions/xxx-kubernetes-aws.git
 
               components:
                 - name: wordpress
@@ -1457,7 +1462,7 @@ spec:
                     destinationNamespace: wordpress
                   wordpress:
                     imageTag: "5.8.1"
-                    repository_ssh_url: "git@github.com:saritasa-nest/xxx-wordpress.git"
+                    repository_ssh_url: "git@github.com:Sea12-Technical-Solutions/xxx-wordpress.git"
                     resources:
                       requests:
                         memory: 512Mi
@@ -1569,7 +1574,7 @@ spec:
                     - name: source_subpath
                       value: dist
 
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.16"
     syncPolicy:
       automated:
@@ -1598,19 +1603,19 @@ whitelistIP: |
 | aws | object | `{}` | aws configuration |
 | defaultRegistry | string | `""` | default docker registry ex: XXX.dkr.ecr.us-west-2.amazonaws.com |
 | environment | string | `""` | environment these apps are handling possible values: dev, staging, prod |
-| eventlistener.enableWebhookSecret | bool | `true` | should we enable eventlistener for tekton triggers? |
-| eventlistener.extraOverlays | list | `[]` | should we add additional overlays for each app running under trigger? |
-| eventlistener.suffix | string | `""` | unique suffix (in case there are several eventlisteners in the cluster) |
 | gitBranchPrefixes[0] | string | `"develop"` |  |
-| nodeSelector | string | `""` | node selector for event listener pod |
+| nodeSelector | object | `{}` | node selector for event listener pod |
 | runPostInstallMountPvcJob | bool | `false` | run job that will mount created (but not bound) PVCs in order for argocd to mark the app as "healthy" |
-| serviceAccount.create | string | `"true"` |  |
 | serviceAccount.name | string | `"build-bot-sa"` |  |
+| serviceAccount.namespace | string | `""` |  |
 | slack.imagesLocation | string | `"https://saritasa-rocks-ci.s3.us-west-2.amazonaws.com"` | slack notification images (s3 bucket prefix) |
 | slack.prefix | string | `"client"` | channel prefix |
 | slack.suffix | string | `"ci"` | channel suffix |
-| storageClassName | string | `"gp2"` | storage class for PVCs associated with the apps |
+| storageClassName | string | `"gp3"` | storage class for PVCs associated with the apps |
+| trigger.enableWebhookSecret | bool | `true` | should tekton triggers check secret passed by GitHub webhook? |
+| trigger.extraOverlays | list | `[]` | should we add additional overlays for each app running under trigger? |
+| trigger.labels | object | `{"builder":"tekton"}` | labels to set on Triggers - for discovery by EventListener |
 | whitelistIP | string | `""` | Comma-separated list of IP masks to bypass access limitation (if applicable, ex. for legacy projects protected with basic authentication) |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

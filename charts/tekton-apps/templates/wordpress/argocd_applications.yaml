@@ -16,6 +16,13 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: {{ $argocd.syncWave | default "210" | quote }}
     jiraURL: {{ $project.jiraURL }}
+    {{- if (($component.argocd).notifications).annotations }}
+    {{- toYaml $component.argocd.notifications.annotations | nindent 4}}
+    {{- else }}
+      {{- if (($project.argocd).notifications).annotations }}
+      {{- toYaml $project.argocd.notifications.annotations | nindent 4}}
+      {{- end }}
+    {{- end }}
 spec:
   destination:
     namespace: {{ include "tekton-apps.set-namespace-from-component-or-project" (dict "component" $component "project" $project "component_name" "component") }}
@@ -62,10 +69,7 @@ spec:
         {{- if .updateStrategy }}
           {{- toYaml .updateStrategy | nindent 10 }}
         {{- else }}
-          type: RollingUpdate
-          rollingUpdate:
-            maxSurge: 0%
-            maxUnavailable: 100%
+          type: Recreate
         {{- end }}
 
         replicaCount: {{ .replicaCount | default 1}}
@@ -76,6 +80,10 @@ spec:
         {{- else }}
           tech_stack: php
           pvc: "true"
+        {{- end }}
+
+        {{- if .priorityClassName }}
+        priorityClassName: {{ .priorityClassName }}
         {{- end }}
 
         {{- if .podSecurityContext }}
@@ -157,7 +165,6 @@ spec:
           {{- end }}
         {{- end }}
 
-
         extraVolumes:
           - name: ssh-key
             secret:
@@ -180,9 +187,9 @@ spec:
         extraEnvVarsSecret: {{ .extraEnvVarsSecret }}
         {{- end }}
 
-        livenessProbe:
+        customLivenessProbe:
           httpGet:
-            path: /wp-admin/install.php
+            path: /wp-includes/js/jquery/jquery.min.js
             port: 8080
             scheme: HTTP
           periodSeconds: 120
@@ -190,14 +197,15 @@ spec:
         readinessProbe:
           enabled: true
           httpGet:
-            path: /wp-admin/install.php
+            path: /wp-includes/js/jquery/jquery.min.js
             port: 8080
             scheme: HTTP
           periodSeconds: 120
 
         service:
           type: ClusterIP
-          port: 8080
+          ports:
+            http: 8080
 
         {{- with .ingress }}
         ingress:
@@ -245,7 +253,7 @@ spec:
 
         wordpressSkipInstall: {{ .wordpressSkipInstall | default "false" }}
         existingWordPressConfigurationSecret: {{ .existingWordPressConfigurationSecret | default "" }}
-        wordpressEmail: {{ .wordpressEmail | default (printf "devops+%s@saritasa.com" $project.project) }}
+        wordpressEmail: {{ .wordpressEmail | default (printf "devops+%s@sea12tech.com" $project.project) }}
         wordpressBlogName: {{ .wordpressBlogName | default $project.project }}
         wordpressScheme: {{ .wordpressScheme | default "https" }}
         wordpressTablePrefix: {{ .wordpressTablePrefix | default "wp_" }}
@@ -271,6 +279,10 @@ spec:
 
     repoURL: {{ $argocd.source.repoUrl | default "https://charts.bitnami.com/bitnami" }}
     targetRevision: {{ $argocd.source.targetRevision | default "15.2.40" }}
+    {{ if (ternary $argocd.source.kustomizeHelmChart false (hasKey $argocd.source "kustomizeHelmChart")) -}}
+    plugin:
+      name: kustomize-build-with-helm
+    {{- end }}
 
   syncPolicy:
     automated:

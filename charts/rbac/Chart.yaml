@@ -6,12 +6,12 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.10
+version: 0.1.13
 
 maintainers:
-  - url: https://www.saritasa.com/
+  - url: https://www.sea12tech.com/
     name: Saritasa
-    email: nospam@saritasa.com
+    email: nospam@sea12tech.com
 
 description: |
   A Helm chart for Kubernetes implementing RBAC rules for saritasa developers, devops and
@@ -35,7 +35,7 @@ description: |
   Install the chart:
 
   ```
-  helm repo add saritasa https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+  helm repo add saritasa https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
   ```
 
   Make the argocd manifest
@@ -69,7 +69,7 @@ description: |
               ingressNginx: true
               postgres: true
             devops: true
-      repoURL: https://saritasa-nest.github.io/saritasa-devops-helm-charts/
+      repoURL: https://sea12-technical-solutions.github.io/saritasa-devops-helm-charts/
       targetRevision: "0.1.7"
     syncPolicy:
       automated:
@@ -99,7 +99,7 @@ description: |
         verbs: ["delete"]
       - apiGroups: [""]
         resources: ["pods/portforward", "services/portforward", "pods/exec"]
-        verbs: ["create"]
+        verbs: ["create", "get"]
       - apiGroups: ["extensions"]
         resources:  ["*"]
         verbs: ["get", "list", "watch"]
