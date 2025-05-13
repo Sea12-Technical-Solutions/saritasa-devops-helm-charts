@@ -93,6 +93,20 @@ entries:
     urls:
     - https://github.com/Sea12-Technical-Solutions/saritasa-devops-helm-charts/releases/download/eol-prometheus-exporter-1.0.1/eol-prometheus-exporter-1.0.1.tgz
     version: 1.0.1
+  grafana-dashboards:
+  - apiVersion: v2
+    created: "2025-05-13T11:39:12.71757907Z"
+    description: 'A Helm chart for provisioning grafana dashboards '
+    digest: b49ae4846a7b4c74ebab6e02d44a4b2e6919794e2bbe93576fc61feb5cd1a759
+    maintainers:
+    - email: nospam@saritasa.com
+      name: Saritasa
+      url: https://www.saritasa.com/
+    name: grafana-dashboards
+    type: application
+    urls:
+    - https://github.com/Sea12-Technical-Solutions/saritasa-devops-helm-charts/releases/download/grafana-dashboards-0.0.12/grafana-dashboards-0.0.12.tgz
+    version: 0.0.12
   jitsi-meet:
   - apiVersion: v2
     appVersion: stable-6865
@@ -2191,4 +2205,4 @@ entries:
     urls:
     - https://github.com/Sea12-Technical-Solutions/saritasa-devops-helm-charts/releases/download/terraform-pod-0.0.36/terraform-pod-0.0.36.tgz
     version: 0.0.36
-generated: "2025-04-28T19:11:04.547310604Z"
+generated: "2025-05-13T11:39:12.860037306Z"
